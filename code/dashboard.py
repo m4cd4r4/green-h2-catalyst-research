@@ -11,6 +11,7 @@ Requirements (requirements_dashboard.txt):
   numpy>=1.24.0
 """
 
+import html as _html
 import os
 import numpy as np
 import pandas as pd
@@ -56,7 +57,7 @@ st.markdown(
         border-radius: 10px;
         padding: 14px 18px;
     }
-    [data-testid="stMetricValue"] { color: #67e8f9; font-size: 1.7rem; font-weight: 700; }
+    [data-testid="stMetricValue"] { color: #06b6d4; font-size: 1.7rem; font-weight: 700; }
     [data-testid="stMetricLabel"] { color: #94a3b8; font-size: 0.82rem; }
 
     /* Tab styling */
@@ -66,7 +67,7 @@ st.markdown(
     /* Badge helpers */
     .badge-go    { background:#15803d; color:#dcfce7; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
     .badge-nogo  { background:#991b1b; color:#fee2e2; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
-    .badge-warn  { background:#854d0e; color:#fef9c3; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
+    .badge-warn  { background:#b45309; color:#fef08a; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
 
     /* Traffic lights */
     .tl-go   { color:#4ade80; font-weight:700; font-size:1.1rem; }
@@ -385,6 +386,7 @@ with tabs[1]:
         total = ca_pct + mn_pct + w_pct + ti_pct
         if total > 100:
             st.error(f"Total = {total}% — must be ≤ 100%. Reduce one element.")
+            st.stop()
         elif total < 100:
             remainder = 100 - total
             st.info(f"Remainder {remainder}% assigned to O (oxygen / lattice balance).")
@@ -505,7 +507,7 @@ with tabs[1]:
 
         st.markdown("#### Synthesis Recommendation")
         st.markdown(
-            f"<div class='glass-card'>{synth_rec}</div>",
+            f"<div class='glass-card'>{_html.escape(synth_rec)}</div>",
             unsafe_allow_html=True,
         )
 
