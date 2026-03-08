@@ -1,0 +1,30 @@
+{
+  "name": "green-h2-catalyst-research",
+  "version": "1.0.0",
+  "description": "**Generated:** March 8, 2026 **Purpose:** Research roadmap for replacing platinum-group metals (PGMs) in water electrolysis **Intended audience:** Materials scientists, electrochemists, ML researchers, grad students **License:** Public domain — use freely",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "test:smoke": "npx playwright test tests/e2e/01-smoke.spec.ts",
+    "test:report": "npx playwright show-report tests/e2e/playwright-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m4cd4r4/green-h2-catalyst-research.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/m4cd4r4/green-h2-catalyst-research/issues"
+  },
+  "homepage": "https://github.com/m4cd4r4/green-h2-catalyst-research#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.5"
+  }
+}

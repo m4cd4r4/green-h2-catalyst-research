@@ -1,0 +1,7 @@
+catalyst,predicted_stability_h
+Fe0.20Co0.19Mn0.09V0.15W0.18Mo0.19 HEO [Optimizer #1],63.0
+Co0.20Fe0.15V0.20W0.20Mo0.25 (V-rich) [Optimizer #2],51.0
+Amorphous NiFeMoV (hypothesis C3),78.0
+NiFeV LDH pulsed-CP (post-protocol),60.0
+WC@NC + Mo (Hypothesis H7 enhanced),135.0
+FeCoNiCrMnV HEA (acid OER) [Optimizer candidate],36.0
