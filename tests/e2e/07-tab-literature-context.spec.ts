@@ -40,9 +40,15 @@ test.describe('Tab 5 — Literature Context', () => {
 
   test('materials comparison dataframe is rendered', async ({ page }) => {
     const frame = getAppFrame(page);
-    // Accept both legacy and newer Streamlit dataframe testids for forward compatibility
-    const tables = frame.locator('[data-testid="stDataFrame"], [data-testid="stDataFrameResizable"]');
-    await expect(tables.first()).toBeVisible({ timeout: 20_000 });
+    // Streamlit keeps all tab panels in DOM; poll for any *visible* dataframe
+    await expect.poll(async () => {
+      const tables = frame.locator('[data-testid="stDataFrame"], [data-testid="stDataFrameResizable"]');
+      const n = await tables.count();
+      for (let i = 0; i < n; i++) {
+        if (await tables.nth(i).isVisible()) return true;
+      }
+      return false;
+    }, { timeout: 20_000 }).toBe(true);
   });
 
   test('dataframe contains IrO₂ benchmark row', async ({ page }) => {

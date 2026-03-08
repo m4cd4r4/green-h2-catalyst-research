@@ -77,6 +77,40 @@ st.markdown(
     /* Section headers */
     h3 { color: #67e8f9; }
     h4 { color: #a5f3fc; }
+
+    /* ── Mobile responsive ────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+        /* Stack all st.columns() layouts vertically */
+        [data-testid="stHorizontalBlock"] {
+            flex-wrap: wrap !important;
+        }
+        [data-testid="stColumn"] {
+            width: 100% !important;
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+        }
+
+        /* Compact metric cards on mobile */
+        [data-testid="stMetric"] { padding: 10px 12px; }
+        [data-testid="stMetricValue"] { font-size: 1.3rem; }
+
+        /* Tab bar: horizontal scroll so all 5 tabs are reachable */
+        [data-testid="stTabs"] > div:first-child {
+            overflow-x: auto;
+            flex-wrap: nowrap !important;
+            -webkit-overflow-scrolling: touch;
+        }
+        [data-testid="stTabs"] button {
+            white-space: nowrap;
+            min-width: 120px;
+        }
+
+        /* Reduce chart minimum height on mobile */
+        .js-plotly-plot { min-height: 260px; }
+
+        /* Glass cards — tighter padding */
+        .glass-card { padding: 12px 14px; }
+    }
     </style>
     """,
     unsafe_allow_html=True,

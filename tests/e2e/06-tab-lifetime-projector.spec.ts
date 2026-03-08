@@ -155,8 +155,15 @@ test.describe('Tab 4 — Lifetime Projector', () => {
     // Wait for the selectbox to be fully visible before asserting the chart —
     // hasLifetimeData may return true before the right-column chart has rendered
     await expect(frame.locator('[data-testid="stSelectbox"]').first()).toBeVisible({ timeout: 15_000 });
-    const charts = frame.locator('.js-plotly-plot, [data-testid="stPlotlyChart"]');
-    await expect(charts.first()).toBeVisible({ timeout: 20_000 });
+    // Streamlit keeps all tab panels in DOM; poll for any *visible* chart
+    await expect.poll(async () => {
+      const charts = frame.locator('[data-testid="stPlotlyChart"]');
+      const n = await charts.count();
+      for (let i = 0; i < n; i++) {
+        if (await charts.nth(i).isVisible()) return true;
+      }
+      return false;
+    }, { timeout: 20_000 }).toBe(true);
   });
 
   test('if data present: data table is rendered', async ({ page }) => {
@@ -165,9 +172,15 @@ test.describe('Tab 4 — Lifetime Projector', () => {
     }
     const frame = getAppFrame(page);
     await expect(frame.locator('[data-testid="stSelectbox"]').first()).toBeVisible({ timeout: 15_000 });
-    // Accept both legacy and newer Streamlit dataframe testids
-    const tables = frame.locator('[data-testid="stDataFrame"], [data-testid="stDataFrameResizable"]');
-    await expect(tables.first()).toBeVisible({ timeout: 15_000 });
+    // Streamlit keeps all tab panels in DOM; poll for any *visible* dataframe
+    await expect.poll(async () => {
+      const tables = frame.locator('[data-testid="stDataFrame"], [data-testid="stDataFrameResizable"]');
+      const n = await tables.count();
+      for (let i = 0; i < n; i++) {
+        if (await tables.nth(i).isVisible()) return true;
+      }
+      return false;
+    }, { timeout: 15_000 }).toBe(true);
   });
 
   test('shows data or missing-data warning referencing gate3_lifetime script', async ({
