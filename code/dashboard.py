@@ -108,12 +108,32 @@ def _csv_path(filename: str) -> str:
     return os.path.join(SCRIPT_DIR, filename)
 
 
+def _add_pareto_flag(df: pd.DataFrame) -> pd.DataFrame:
+    """Mark Pareto-optimal rows: not dominated on both eta_10_mv and dissolution_rate_ugcm2h."""
+    eta = df["eta_10_mv"].values
+    diss = df["dissolution_rate_ugcm2h"].values
+    on_front = np.ones(len(eta), dtype=bool)
+    for i in range(len(eta)):
+        for j in range(len(eta)):
+            if i != j and eta[j] <= eta[i] and diss[j] <= diss[i] and (eta[j] < eta[i] or diss[j] < diss[i]):
+                on_front[i] = False
+                break
+    df = df.copy()
+    df["pareto_front"] = on_front
+    return df
+
+
 @st.cache_data(show_spinner=False)
 def load_pareto_9el() -> pd.DataFrame | None:
     path = _csv_path("results_acid_oer_pareto.csv")
     if not os.path.exists(path):
         return None
-    return pd.read_csv(path)
+    df = pd.read_csv(path)
+    # Normalise column names to what the dashboard expects
+    df = df.rename(columns={"dissolution_ug_per_cm2_per_h": "dissolution_rate_ugcm2h"})
+    # Strip x_ prefix from element columns (x_Mn → Mn, etc.)
+    df = df.rename(columns={c: c[2:] for c in df.columns if c.startswith("x_")})
+    return _add_pareto_flag(df)
 
 
 @st.cache_data(show_spinner=False)
@@ -121,7 +141,9 @@ def load_pareto_camnw() -> pd.DataFrame | None:
     path = _csv_path("results_ca_mnw_pareto.csv")
     if not os.path.exists(path):
         return None
-    return pd.read_csv(path)
+    df = pd.read_csv(path)
+    df = df.rename(columns={"dissolution_ug_cm2h": "dissolution_rate_ugcm2h"})
+    return _add_pareto_flag(df)
 
 
 @st.cache_data(show_spinner=False)
