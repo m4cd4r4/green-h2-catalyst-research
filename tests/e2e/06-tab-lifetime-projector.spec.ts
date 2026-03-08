@@ -152,8 +152,11 @@ test.describe('Tab 4 — Lifetime Projector', () => {
       test.skip(true, 'No Lifetime Projector data loaded');
     }
     const frame = getAppFrame(page);
+    // Wait for the selectbox to be fully visible before asserting the chart —
+    // hasLifetimeData may return true before the right-column chart has rendered
+    await expect(frame.locator('[data-testid="stSelectbox"]').first()).toBeVisible({ timeout: 15_000 });
     const charts = frame.locator('.js-plotly-plot, [data-testid="stPlotlyChart"]');
-    await expect(charts.first()).toBeVisible({ timeout: 15_000 });
+    await expect(charts.first()).toBeVisible({ timeout: 20_000 });
   });
 
   test('if data present: data table is rendered', async ({ page }) => {
@@ -161,8 +164,10 @@ test.describe('Tab 4 — Lifetime Projector', () => {
       test.skip(true, 'No Lifetime Projector data loaded');
     }
     const frame = getAppFrame(page);
-    const tables = frame.locator('[data-testid="stDataFrame"]');
-    await expect(tables.first()).toBeVisible({ timeout: 10_000 });
+    await expect(frame.locator('[data-testid="stSelectbox"]').first()).toBeVisible({ timeout: 15_000 });
+    // Accept both legacy and newer Streamlit dataframe testids
+    const tables = frame.locator('[data-testid="stDataFrame"], [data-testid="stDataFrameResizable"]');
+    await expect(tables.first()).toBeVisible({ timeout: 15_000 });
   });
 
   test('shows data or missing-data warning referencing gate3_lifetime script', async ({

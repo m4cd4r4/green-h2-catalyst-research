@@ -83,9 +83,10 @@ test.describe('Tab 2 — Composition Predictor (structure)', () => {
 
   test('exactly 4 element sliders are visible', async ({ page }) => {
     const frame = getAppFrame(page);
-    const sliders = frame.locator('[data-testid="stSlider"]');
-    const count = await sliders.count();
-    expect(count).toBe(4);
+    // Filter to element-fraction sliders by label (Ca/Mn/W/Ti) to avoid
+    // counting sliders from other tabs that remain in the DOM
+    const elementSliders = frame.locator('[data-testid="stSlider"]').filter({ hasText: /\b(Ca|Mn|W|Ti)\b.*%/i });
+    await expect(elementSliders).toHaveCount(4, { timeout: 10_000 });
   });
 
   test('a total-percentage message is displayed', async ({ page }) => {

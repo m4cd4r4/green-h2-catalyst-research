@@ -87,8 +87,8 @@ test.describe('Sidebar', () => {
   test('sidebar shows the flask/beaker emoji icon (⚗️)', async ({ page }) => {
     const frame = getAppFrame(page);
     const sidebar = frame.locator('[data-testid="stSidebar"]');
-    // The sidebar header has ⚗️ Green H₂ Catalyst
-    const text = await sidebar.innerText();
-    expect(text).toMatch(/⚗️|Green H.*Catalyst/);
+    // Use toContainText with a wait — the heading is injected via unsafe_allow_html
+    // and may not be present immediately after tab load
+    await expect(sidebar).toContainText(/⚗️|Green H.*Catalyst/i, { timeout: 15_000 });
   });
 });

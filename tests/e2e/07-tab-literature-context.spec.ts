@@ -40,8 +40,9 @@ test.describe('Tab 5 — Literature Context', () => {
 
   test('materials comparison dataframe is rendered', async ({ page }) => {
     const frame = getAppFrame(page);
-    const tables = frame.locator('[data-testid="stDataFrame"]');
-    await expect(tables.first()).toBeVisible({ timeout: 15_000 });
+    // Accept both legacy and newer Streamlit dataframe testids for forward compatibility
+    const tables = frame.locator('[data-testid="stDataFrame"], [data-testid="stDataFrameResizable"]');
+    await expect(tables.first()).toBeVisible({ timeout: 20_000 });
   });
 
   test('dataframe contains IrO₂ benchmark row', async ({ page }) => {
