@@ -30,3 +30,15 @@ Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Node / Playwright
+node_modules/
+test-results/
+playwright-report/
+
+# Temporary debug scripts
+check-page-state*.js
+debug-*.js
+
+# Claude workspace
+.claude/

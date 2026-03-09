@@ -1,6 +1,6 @@
 # ⚗️ Green H₂ Catalyst Research Dashboard
 
-**Computational screening pipeline for earth-abundant acid OER catalysts — targeting an iridium-free green hydrogen future.**
+**Computational screening pipeline for earth-abundant acid OER catalysts - targeting an iridium-free green hydrogen future.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://green-h2-catalyst.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -10,17 +10,17 @@
 
 ## What this is
 
-Proton-exchange membrane (PEM) electrolysers split water into green hydrogen and oxygen. The oxygen evolution reaction (OER) at the anode is the bottleneck — it requires a catalyst that is **active**, **stable in acid**, and **earth-abundant** (IrO₂, the commercial standard, uses iridium at ~$50,000/kg).
+Proton-exchange membrane (PEM) electrolysers split water into green hydrogen and oxygen. The oxygen evolution reaction (OER) at the anode is the bottleneck - it requires a catalyst that is **active**, **stable in acid**, and **earth-abundant** (IrO₂, the commercial standard, uses iridium at ~$50,000/kg).
 
 This project uses a three-gate ML screening pipeline to identify Ca–Mn–W oxide compositions that could replace IrO₂:
 
 | Gate | Question | Method |
 |------|----------|--------|
-| **Gate 1 — Synthesis** | Will the target phase form without decomposing? | XGBoost phase stability model, 216 temperature/pH conditions |
-| **Gate 2 — eg Tuning** | Is the eg filling in the Sabatier optimal zone (0.45–0.59)? | Volcano-curve regression, Bayesian composition optimiser |
-| **Gate 3 — Lifetime** | Will it survive >50,000 h of operation? | Dissolution kinetics model, pulsed vs continuous operation |
+| **Gate 1 - Synthesis** | Will the target phase form without decomposing? | XGBoost phase stability model, 216 temperature/pH conditions |
+| **Gate 2 - eg Tuning** | Is the eg filling in the Sabatier optimal zone (0.45–0.59)? | Volcano-curve regression, Bayesian composition optimiser |
+| **Gate 3 - Lifetime** | Will it survive >50,000 h of operation? | Dissolution kinetics model, pulsed vs continuous operation |
 
-**Primary candidate:** Ca(0.11)Mn(0.55)W(0.34) — passes all three gates. Predicted η₁₀ ≈ 278 mV (IrO₂: 250 mV), P50 lifetime ≈ 143,506 h pulsed (IrO₂: ~50,000 h).
+**Primary candidate:** Ca(0.11)Mn(0.55)W(0.34) - passes all three gates. Predicted η₁₀ ≈ 278 mV (IrO₂: 250 mV), P50 lifetime ≈ 143,506 h pulsed (IrO₂: ~50,000 h).
 
 ---
 
@@ -29,7 +29,7 @@ This project uses a three-gate ML screening pipeline to identify Ca–Mn–W oxi
 > **[https://green-h2-catalyst.streamlit.app/](https://green-h2-catalyst.streamlit.app/)**
 
 ![Gate Status Board](docs/screenshots/gate-status-board.png)
-*Gate Status Board — all three screening gates pass for the Ca–Mn–W system*
+*Gate Status Board - all three screening gates pass for the Ca–Mn–W system*
 
 ---
 
@@ -56,9 +56,9 @@ Side-by-side comparison of the best reported earth-abundant acid OER catalysts (
 
 | Gate | Result | Detail |
 |------|--------|--------|
-| Gate 1 — Synthesis Sweep | **GO** ✅ | 216/216 conditions pass; f_CaWO₄ = 22.1% at optimal T/pH |
-| Gate 2 — eg Tuning | **GO** ✅ | 3/3 compositions; best eg = 0.520 (target 0.45–0.59), η₁₀ = 245 mV |
-| Gate 3 — Lifetime | **GO** ✅ | 3/4 compositions; Ca(0.11)Mn(0.55)W(0.34) P50 pulsed = 143,506 h |
+| Gate 1 - Synthesis Sweep | **GO** ✅ | 216/216 conditions pass; f_CaWO₄ = 22.1% at optimal T/pH |
+| Gate 2 - eg Tuning | **GO** ✅ | 3/3 compositions; best eg = 0.520 (target 0.45–0.59), η₁₀ = 245 mV |
+| Gate 3 - Lifetime | **GO** ✅ | 3/4 compositions; Ca(0.11)Mn(0.55)W(0.34) P50 pulsed = 143,506 h |
 
 ---
 
@@ -75,8 +75,10 @@ code/
   results_gate3_projection.csv
   results_acid_oer_pareto.csv
   results_ca_mnw_pareto.csv
+docs/
+  research/                      # 20 background research documents
+  screenshots/                   # README screenshots
 tests/e2e/                       # Playwright E2E suite (125 passing)
-docs/screenshots/                # README screenshots
 ```
 
 ---
@@ -147,4 +149,4 @@ See also [`CITATION.cff`](CITATION.cff).
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
