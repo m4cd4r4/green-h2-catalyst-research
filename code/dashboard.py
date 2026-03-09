@@ -30,6 +30,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown('<meta name="google-site-verification" content="fArVSBqkEDQH594oy5ccGk5ML3I8Yj8pa2pj7vJDQFQ">', unsafe_allow_html=True)
+
 st.markdown("""<script type="application/ld+json">
 {
   "@context": "https://schema.org",
