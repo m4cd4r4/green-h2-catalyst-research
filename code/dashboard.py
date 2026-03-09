@@ -36,14 +36,23 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Base dark background */
-    .stApp { background: #0b1120; color: #e2e8f0; }
-    [data-testid="stSidebar"] { background: #0d1929; border-right: 1px solid #1e3a5f; }
+    /* ── Green Hydrogen palette ──────────────────────────────────────────── */
+    /* Background: deep forest  #071a0e                                       */
+    /* Surface:    dark moss    #0e2a18                                       */
+    /* Primary:    GO green     #22c55e                                       */
+    /* Accent:     light green  #86efac                                       */
+    /* Highlight:  amber/IrO₂   #eab308                                       */
+    /* Muted:      grey         #6b7280                                       */
+    /* ─────────────────────────────────────────────────────────────────────── */
+
+    /* Base */
+    .stApp { background: #071a0e; color: #e2f5e9; }
+    [data-testid="stSidebar"] { background: #0e2a18; border-right: 1px solid #1a3d20; }
 
     /* Glassmorphism cards */
     .glass-card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(34,197,94,0.05);
+        border: 1px solid rgba(34,197,94,0.18);
         border-radius: 12px;
         padding: 18px 22px;
         backdrop-filter: blur(8px);
@@ -52,17 +61,17 @@ st.markdown(
 
     /* KPI metric override */
     [data-testid="stMetric"] {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(34,197,94,0.06);
+        border: 1px solid rgba(34,197,94,0.18);
         border-radius: 10px;
         padding: 14px 18px;
     }
-    [data-testid="stMetricValue"] { color: #06b6d4; font-size: 1.7rem; font-weight: 700; }
-    [data-testid="stMetricLabel"] { color: #94a3b8; font-size: 0.82rem; }
+    [data-testid="stMetricValue"] { color: #22c55e; font-size: 1.7rem; font-weight: 700; }
+    [data-testid="stMetricLabel"] { color: #6b7280; font-size: 0.82rem; }
 
     /* Tab styling */
-    [data-testid="stTabs"] button { color: #94a3b8; font-weight: 500; }
-    [data-testid="stTabs"] button[aria-selected="true"] { color: #67e8f9; border-bottom: 2px solid #67e8f9; }
+    [data-testid="stTabs"] button { color: #6b7280; font-weight: 500; }
+    [data-testid="stTabs"] button[aria-selected="true"] { color: #86efac; border-bottom: 2px solid #22c55e; }
 
     /* Badge helpers */
     .badge-go    { background:#15803d; color:#dcfce7; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
@@ -71,12 +80,12 @@ st.markdown(
 
     /* Traffic lights */
     .tl-go   { color:#4ade80; font-weight:700; font-size:1.1rem; }
-    .tl-warn { color:#facc15; font-weight:700; font-size:1.1rem; }
+    .tl-warn { color:#eab308; font-weight:700; font-size:1.1rem; }
     .tl-nogo { color:#f87171; font-weight:700; font-size:1.1rem; }
 
     /* Section headers */
-    h3 { color: #67e8f9; }
-    h4 { color: #a5f3fc; }
+    h3 { color: #86efac; }
+    h4 { color: #bbf7d0; }
 
     /* ── Mobile responsive ────────────────────────────────────────────────── */
     @media (max-width: 768px) {
