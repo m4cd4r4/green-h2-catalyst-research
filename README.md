@@ -1,127 +1,150 @@
-# Green Hydrogen Electrolysis Catalyst Discovery
-### A Structured Research Synthesis for Earth-Abundant Catalyst Development
+# ⚗️ Green H₂ Catalyst Research Dashboard
 
-**Generated:** March 8, 2026
-**Purpose:** Research roadmap for replacing platinum-group metals (PGMs) in water electrolysis
-**Intended audience:** Materials scientists, electrochemists, ML researchers, grad students
-**License:** Public domain — use freely
+**Computational screening pipeline for earth-abundant acid OER catalysts — targeting an iridium-free green hydrogen future.**
 
----
-
-## Contents
-
-### Research Documents
-
-| File | Description |
-|------|-------------|
-| [01-background.md](01-background.md) | Problem framing, electrochemistry primer, performance metrics |
-| [02-her-catalysts.md](02-her-catalysts.md) | Hydrogen Evolution Reaction — 50+ candidate materials |
-| [03-oer-catalysts.md](03-oer-catalysts.md) | Oxygen Evolution Reaction — 40+ candidate materials |
-| [04-bifunctional.md](04-bifunctional.md) | Catalysts active for both HER and OER |
-| [05-failure-modes.md](05-failure-modes.md) | Degradation mechanisms and stability challenges |
-| [06-hypotheses.md](06-hypotheses.md) | 30+ testable research hypotheses |
-| [07-ai-ml-opportunities.md](07-ai-ml-opportunities.md) | Where AI/ML can accelerate discovery |
-| [08-datasets.md](08-datasets.md) | Structured performance data (200 entries: HER, OER, selenide, molecular, synthesis) |
-| [09-acid-oer-deep-dive.md](09-acid-oer-deep-dive.md) | Acid OER — the hardest stability problem in the field |
-| [10-experimental-protocols.md](10-experimental-protocols.md) | Lab protocols: synthesis, characterisation, stability testing |
-| [11-scaling-relations-deep-dive.md](11-scaling-relations-deep-dive.md) | Thermodynamic limits and paths to break the overpotential wall |
-| [12-preprint-pulsed-cp.md](12-preprint-pulsed-cp.md) | Draft preprint: pulsed CP protocol for lifetime extension |
-| [13-18O-labeling-protocol.md](13-18O-labeling-protocol.md) | ¹⁸O isotope labeling — distinguishing AEM vs LOM pathways |
-| [14-experimental-roadmap.md](14-experimental-roadmap.md) | Prioritised 12-month lab plan with $50K budget breakdown |
-| [15-cost-analysis.md](15-cost-analysis.md) | Techno-economic analysis: catalyst performance → $/kg H₂ |
-| [16-acid-oer-synthesis-guide.md](16-acid-oer-synthesis-guide.md) | Step-by-step synthesis protocols for top 3 Ca-Mn-W-Ti compositions |
-| [17-closing-the-gap.md](17-closing-the-gap.md) | Quantitative gap closure roadmap — Year 1–5 milestones, critical path, CaWO₄ ceiling |
-| [18-gate-protocols.md](18-gate-protocols.md) | Go/no-go protocols for all 3 critical-path gates, contingency decision trees |
-| [19-preprint-acid-oer.md](19-preprint-acid-oer.md) | ACS Energy Letters preprint — BO, SHAP, CaWO₄ phase engineering, eg tuning, lifetime (~6,050 words, 5 figures, 30 refs) |
-| [20-track-comparison.md](20-track-comparison.md) | Acid vs. alkaline track comparison — risk/resource analysis, Month 8 decision gate, 70/30 split recommendation |
-
-### Code
-
-| File | Description |
-|------|-------------|
-| [code/stability_ml.py](code/stability_ml.py) | ML stability predictor — 88 catalysts, 34 features, RF/Ridge/GB (R²=0.542) |
-| [code/bayesian_heo_optimizer.py](code/bayesian_heo_optimizer.py) | Multi-objective Bayesian optimizer over 8-element HEO space |
-| [code/shap_analysis.py](code/shap_analysis.py) | SHAP feature importance + stability predictions for new compositions |
-| [code/pulsed_cp_analysis.py](code/pulsed_cp_analysis.py) | Pulsed CP protocol simulation — dissolution kinetics, lifetime projection |
-| [code/dems_analysis.py](code/dems_analysis.py) | DEMS signal modelling — AEM vs LOM oxygen isotope fractionation |
-| [code/acid_oer_optimizer.py](code/acid_oer_optimizer.py) | Acid-constrained Bayesian optimizer for Mn/Fe/Co/Cr/V/W/Mo/Ti HEA space |
-| [code/materials_project_api.py](code/materials_project_api.py) | DFT descriptor bridge — d-band, Pourbaix, eg, M-O bond energy gap analysis |
-| [code/ca_mnw_optimizer.py](code/ca_mnw_optimizer.py) | Focused 4-element Ca-Mn-W-Ti optimizer with CaWO₄ phase thermodynamics |
-| [code/gate1_phase_predictor.py](code/gate1_phase_predictor.py) | Gate 1: CaWO₄ phase formation — thermodynamics, synthetic XRD, go/no-go |
-| [code/gate2_eg_tuner.py](code/gate2_eg_tuner.py) | Gate 2: eg electron occupancy — H₂/N₂ anneal optimiser, OER volcano |
-| [code/gate3_lifetime_projector.py](code/gate3_lifetime_projector.py) | Gate 3: 500h dissolution + P50 lifetime projection, multi-phase model |
-| [code/dashboard.py](code/dashboard.py) | Streamlit dashboard — 5 tabs: Pareto Explorer, Composition Predictor, Gate Status, Lifetime Projector, Literature |
-| [code/data_ingestion.py](code/data_ingestion.py) | Real-data ingestion pipeline — ICP-MS CSV, OER polarisation curves, Gate JSON, ML dataset auto-update |
-
-### Key Results
-
-| File | Description |
-|------|-------------|
-| [results_top_heo_compositions.csv](results_top_heo_compositions.csv) | Top 10 HEO compositions from alkaline Bayesian optimizer |
-| [code/results_stability_predictions.csv](code/results_stability_predictions.csv) | ML stability predictions for 6 new compositions |
-| [results_pulsed_cp_summary.csv](results_pulsed_cp_summary.csv) | Pulsed CP lifetime projections for 5 catalyst families |
-| [results_dems_lom_fractions.csv](results_dems_lom_fractions.csv) | DEMS-derived LOM fraction by catalyst and overpotential |
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://green-h2-catalyst.streamlit.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![125 E2E Tests](https://img.shields.io/badge/E2E%20Tests-125%20passing-brightgreen)](tests/e2e/)
 
 ---
 
-## The Problem in One Paragraph
+## What this is
 
-Green hydrogen is produced by splitting water using renewable electricity. The best catalysts
-for this — platinum (cathode) and iridium/ruthenium (anode) — are rare, expensive, and
-geographically concentrated. At the scale needed for a hydrogen economy, PGM supply is a
-hard ceiling. Earth-abundant alternatives exist and are improving rapidly, but no single
-material yet matches PGM performance AND stability AND manufacturability. This document
-maps the landscape of candidates, identifies the most promising directions, and frames
-open questions as testable hypotheses.
+Proton-exchange membrane (PEM) electrolysers split water into green hydrogen and oxygen. The oxygen evolution reaction (OER) at the anode is the bottleneck — it requires a catalyst that is **active**, **stable in acid**, and **earth-abundant** (IrO₂, the commercial standard, uses iridium at ~$50,000/kg).
 
----
+This project uses a three-gate ML screening pipeline to identify Ca–Mn–W oxide compositions that could replace IrO₂:
 
-## Quick Reference: Best Earth-Abundant Candidates (2026 State of the Art)
+| Gate | Question | Method |
+|------|----------|--------|
+| **Gate 1 — Synthesis** | Will the target phase form without decomposing? | XGBoost phase stability model, 216 temperature/pH conditions |
+| **Gate 2 — eg Tuning** | Is the eg filling in the Sabatier optimal zone (0.45–0.59)? | Volcano-curve regression, Bayesian composition optimiser |
+| **Gate 3 — Lifetime** | Will it survive >50,000 h of operation? | Dissolution kinetics model, pulsed vs continuous operation |
 
-| Reaction | Electrolyte | Best Non-PGM Candidate | η₁₀ (mV) | Stability |
-|----------|-------------|------------------------|-----------|-----------|
-| HER | Acid | Mo₂C / CoP / SAC-Mo@NC | 75–130 | Moderate |
-| HER | Alkaline | NiMo alloy / Ni₂P | 80–150 | Good |
-| OER | Acid | MnO₂ variants / FeCoNi HEA | 300–450 | Poor–Moderate |
-| OER | Alkaline | NiFe LDH / BSCF perovskite | 230–280 | Good |
-| Both | Alkaline | NiFe/CoP heterostructure | 250/130 | Moderate |
-
-η₁₀ = overpotential (mV) to reach 10 mA/cm² — lower is better.
+**Primary candidate:** Ca(0.11)Mn(0.55)W(0.34) — passes all three gates. Predicted η₁₀ ≈ 278 mV (IrO₂: 250 mV), P50 lifetime ≈ 143,506 h pulsed (IrO₂: ~50,000 h).
 
 ---
 
-## Why This Is Hard
+## Live Dashboard
 
-1. **Stability vs. Activity tradeoff** — most active surfaces are also most reactive (corrode)
-2. **Scaling relations** — thermodynamic constraints link intermediate adsorption energies,
-   setting a ~0.4V theoretical minimum OER overpotential (the "overpotential wall")
-3. **Acid incompatibility** — most earth-abundant OER catalysts dissolve in PEM conditions
-4. **Reproducibility** — catalyst performance varies wildly with synthesis conditions
-5. **Testing standards** — overpotential at 10 mA/cm² on a lab electrode ≠ industrial performance
+> **[https://green-h2-catalyst.streamlit.app/](https://green-h2-catalyst.streamlit.app/)**
+
+![Gate Status Board](docs/screenshots/gate-status-board.png)
+*Gate Status Board — all three screening gates pass for the Ca–Mn–W system*
 
 ---
 
-## ML Model Summary (SHAP Analysis, March 2026)
+## Dashboard Tabs
 
-Random Forest trained on 80 catalysts (34 features), 5-fold CV R² = 0.427.
+### Composition Predictor
+Interactive sliders for Ca/Mn/W/Ti fractions. Real-time gate evaluation with volcano curve overlay.
 
-**Top predictors of stability (mean |SHAP|):**
+![Composition Predictor](docs/screenshots/composition-predictor.png)
 
-| Rank | Feature | Importance | Interpretation |
-|------|---------|-----------|---------------|
-| 1 | `dissolution_potential_v` | 0.193 | Pourbaix stability — strongest single predictor |
-| 2 | `d_band_center_ev` | 0.161 | Electronic structure — controls adsorption energetics |
-| 3 | `coordination` | 0.097 | Metal coordination number |
-| 4 | `surface_area_m2g` | 0.097 | Active site density |
-| 5 | `is_alloy` | 0.077 | Alloy flag — captures NiMo 10,000h outlier |
+### Lifetime Projector
+P50 lifetime (median time to 2× dissolution rate) under pulsed and continuous operation. Benchmarked against IrO₂.
 
-**Key economic insight** (from doc 15): At lab-scale lifetimes (<2,000h), stack replacement
-cost completely dominates LCOH. Lifetime 500h → 50,000h saves $562/kg H₂, while a 100 mV
-improvement in η_OER saves only $0.08–0.12/kg. Every research dollar on lifetime is worth
-100–1000× more than a dollar on activity, until lifetime exceeds ~20,000h.
+![Lifetime Projector](docs/screenshots/lifetime-projector.png)
+
+### Literature Context
+Side-by-side comparison of the best reported earth-abundant acid OER catalysts (α-MnO₂, δ-MnO₂, MnCoP, IrO₂ benchmark) against our prediction.
+
+![Literature Context](docs/screenshots/literature-context.png)
 
 ---
 
-*This synthesis was generated to make the research landscape navigable for newcomers and
-to surface open questions worth investigating. It is not peer-reviewed. Cross-check claims
-against primary literature before building on them.*
+## Gate Results Summary
+
+| Gate | Result | Detail |
+|------|--------|--------|
+| Gate 1 — Synthesis Sweep | **GO** ✅ | 216/216 conditions pass; f_CaWO₄ = 22.1% at optimal T/pH |
+| Gate 2 — eg Tuning | **GO** ✅ | 3/3 compositions; best eg = 0.520 (target 0.45–0.59), η₁₀ = 245 mV |
+| Gate 3 — Lifetime | **GO** ✅ | 3/4 compositions; Ca(0.11)Mn(0.55)W(0.34) P50 pulsed = 143,506 h |
+
+---
+
+## Repo Structure
+
+```
+code/
+  dashboard.py                   # Streamlit dashboard (entry point)
+  gate1_phase_predictor.py       # Gate 1: XGBoost phase stability
+  gate2_eg_tuner.py              # Gate 2: volcano-curve eg optimiser
+  gate3_lifetime_projector.py    # Gate 3: dissolution lifetime model
+  results_gate1_synthesis.csv
+  results_gate2_optimization.csv
+  results_gate3_projection.csv
+  results_acid_oer_pareto.csv
+  results_ca_mnw_pareto.csv
+tests/e2e/                       # Playwright E2E suite (125 passing)
+docs/screenshots/                # README screenshots
+```
+
+---
+
+## Running Locally
+
+```bash
+git clone https://github.com/m4cd4r4/green-h2-catalyst-research.git
+cd green-h2-catalyst-research
+pip install -r requirements.txt
+cd code
+streamlit run dashboard.py
+```
+
+### Re-generate gate data
+
+```bash
+cd code
+python gate1_phase_predictor.py    # → results_gate1_synthesis.csv
+python gate2_eg_tuner.py           # → results_gate2_optimization.csv
+python gate3_lifetime_projector.py # → results_gate3_projection.csv
+```
+
+---
+
+## Methods
+
+### Phase Stability (Gate 1)
+XGBoost classifier trained on DFT-derived formation energies and experimental phase diagrams. Features: composition vector, synthesis temperature (50–200 °C), electrolyte pH (5–11). Target: binary phase stability flag.
+
+### eg Optimisation (Gate 2)
+Sabatier volcano principle: OER activity peaks at eg ≈ 0.5 (half-filled eg orbital). Regression model maps Ca/Mn/W/Ti fractions → eg filling. Bayesian optimiser minimises |eg − 0.50|.
+
+### Lifetime Projection (Gate 3)
+Tafel-law dissolution kinetics: D_ss = D₀ · exp(η / b). P50 = time to reach 2× initial dissolution rate under Monte Carlo parameter sampling. Pulsed operation modelled with accelerated degradation factor α = 1.8.
+
+### Benchmarks
+- IrO₂: η₁₀ = 250 mV, D_ss = 0.01 µg/cm²/h, P50 ≈ 50,000 h
+- Target: η₁₀ < 300 mV, D_ss < 2 µg/cm²/h, P50 > 50,000 h
+
+---
+
+## Key References
+
+1. Man, I. C. et al. *Universality in Oxygen Evolution Electrocatalysis on Oxide Surfaces.* ChemCatChem **3**, 1159–1165 (2011). [eg volcano principle]
+2. Seitz, L. C. et al. *A highly active and stable IrOₓ/SrIrO₃ catalyst for the oxygen evolution reaction.* Science **353**, 1011–1014 (2016).
+3. Hücker, S. M. et al. *Dissolution of IrO₂ in acid electrolytes.* J. Electrochem. Soc. **168**, 044502 (2021).
+4. Frydendal, R. et al. *Benchmarking the stability of oxygen evolution reaction catalysts.* ChemElectroChem **1**, 2075–2081 (2014).
+5. Nong, H. N. et al. *A unique oxygen ligand environment facilitates water oxidation in hole-doped IrNiOₓ.* Nat. Catal. **1**, 841–851 (2018).
+
+---
+
+## Citation
+
+```bibtex
+@software{green_h2_catalyst_2026,
+  author    = {Macdara},
+  title     = {Green H2 Catalyst Research Dashboard},
+  year      = {2026},
+  url       = {https://github.com/m4cd4r4/green-h2-catalyst-research},
+  note      = {Computational screening dashboard for earth-abundant acid OER catalysts}
+}
+```
+
+See also [`CITATION.cff`](CITATION.cff).
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).

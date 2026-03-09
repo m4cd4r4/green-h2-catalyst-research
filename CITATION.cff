@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Green H2 Catalyst Research Dashboard"
+abstract: >
+  A computational screening dashboard for earth-abundant acid oxygen
+  evolution reaction (OER) catalysts for green hydrogen production.
+  Uses a three-gate ML pipeline (XGBoost phase stability, volcano-curve
+  eg optimisation, dissolution lifetime projection) to screen Ca–Mn–W
+  oxide compositions as potential iridium-free replacements for IrO2.
+authors:
+  - family-names: "Macdara"
+    given-names: ""
+    orcid: ""
+repository-code: "https://github.com/m4cd4r4/green-h2-catalyst-research"
+url: "https://green-h2-catalyst.streamlit.app/"
+license: MIT
+date-released: "2026-03-09"
+keywords:
+  - green hydrogen
+  - electrocatalysis
+  - oxygen evolution reaction
+  - acid OER
+  - iridium-free catalyst
+  - Ca-Mn-W oxide
+  - machine learning
+  - computational screening
+  - Sabatier volcano
+  - PEM electrolyser
