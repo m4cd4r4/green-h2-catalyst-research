@@ -37,17 +37,17 @@ st.markdown(
     """
     <style>
     /* ── Green Hydrogen palette ──────────────────────────────────────────── */
-    /* Background: deep forest  #071a0e                                       */
-    /* Surface:    dark moss    #0e2a18                                       */
-    /* Primary:    GO green     #22c55e                                       */
-    /* Accent:     light green  #86efac                                       */
-    /* Highlight:  amber/IrO₂   #eab308                                       */
-    /* Muted:      grey         #6b7280                                       */
+    /* Background: forest green  #0c2d18                                      */
+    /* Surface:    moss green    #163d24                                       */
+    /* Primary:    GO green      #22c55e                                       */
+    /* Accent:     light green   #86efac                                       */
+    /* Highlight:  amber/IrO₂    #eab308                                       */
+    /* Muted:      grey          #6b7280                                       */
     /* ─────────────────────────────────────────────────────────────────────── */
 
     /* Base */
-    .stApp { background: #071a0e; color: #e2f5e9; }
-    [data-testid="stSidebar"] { background: #0e2a18; border-right: 1px solid #1a3d20; }
+    .stApp { background: #0c2d18; color: #e2f5e9; }
+    [data-testid="stSidebar"] { background: #163d24; border-right: 1px solid #1f5233; }
 
     /* Glassmorphism cards */
     .glass-card {
