@@ -133,7 +133,7 @@ Tafel-law dissolution kinetics: D_ss = D₀ · exp(η / b). P50 = time to reach 
 
 ```bibtex
 @software{green_h2_catalyst_2026,
-  author    = {Macdara},
+  author    = {Ó Murchú, Macdara},
   title     = {Green H2 Catalyst Research Dashboard},
   year      = {2026},
   url       = {https://github.com/m4cd4r4/green-h2-catalyst-research},
