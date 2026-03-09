@@ -42,3 +42,6 @@ debug-*.js
 
 # Claude workspace
 .claude/
+
+# Dev artifacts
+docs/theme-mockups.html
