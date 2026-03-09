@@ -94,15 +94,34 @@ st.markdown(
         [data-testid="stMetric"] { padding: 10px 12px; }
         [data-testid="stMetricValue"] { font-size: 1.3rem; }
 
-        /* Tab bar: horizontal scroll so all 5 tabs are reachable */
-        [data-testid="stTabs"] > div:first-child {
-            overflow-x: auto;
-            flex-wrap: nowrap !important;
-            -webkit-overflow-scrolling: touch;
+        /* Tab bar: 2-row grid — 3 tabs top, 2 bottom */
+        /* Hide Streamlit's built-in left/right scroll buttons */
+        [data-baseweb="scroll-button-left"],
+        [data-baseweb="scroll-button-right"] { display: none !important; }
+
+        /* Let the tab list wrap into rows */
+        [data-baseweb="tab-list"] {
+            flex-wrap: wrap !important;
+            overflow: visible !important;
+            height: auto !important;
         }
-        [data-testid="stTabs"] button {
-            white-space: nowrap;
-            min-width: 120px;
+        /* Parent clip container — allow the second row to show */
+        [data-testid="stTabs"] > div:first-child {
+            overflow: visible !important;
+            height: auto !important;
+        }
+        /* Each tab: 1/3 width → 3 per row, 2 wrap to second row */
+        [data-baseweb="tab"] {
+            width: 33.33% !important;
+            flex: 0 0 33.33% !important;
+            font-size: 0.72rem !important;
+            padding: 8px 4px !important;
+            white-space: normal !important;
+            text-align: center !important;
+            min-height: 44px !important;
+            line-height: 1.2 !important;
+            justify-content: center !important;
+            box-sizing: border-box !important;
         }
 
         /* Reduce chart minimum height on mobile */
