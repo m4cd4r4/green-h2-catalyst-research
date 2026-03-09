@@ -30,29 +30,58 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown("""<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Green H\u2082 Catalyst Research",
+  "url": "https://green-h2-catalyst.streamlit.app/",
+  "description": "ML screening pipeline for earth-abundant acid OER catalysts \u2014 iridium-free green hydrogen production",
+  "applicationCategory": "ScienceApplication",
+  "operatingSystem": "Web",
+  "author": {
+    "@type": "Person",
+    "name": "Macdara \u00d3 Murchu\u00fa",
+    "url": "https://github.com/m4cd4r4",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Solaisoft",
+      "legalName": "Solaisoft Pty Ltd",
+      "url": "https://solaisoft.com"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Solaisoft",
+    "legalName": "Solaisoft Pty Ltd",
+    "url": "https://solaisoft.com"
+  }
+}
+</script>""", unsafe_allow_html=True)
+
 # ---------------------------------------------------------------------------
 # Global dark / glassmorphism CSS
 # ---------------------------------------------------------------------------
 st.markdown(
     """
     <style>
-    /* ── Green Hydrogen palette ──────────────────────────────────────────── */
-    /* Background: forest green  #0c2d18                                      */
-    /* Surface:    moss green    #163d24                                       */
-    /* Primary:    GO green      #22c55e                                       */
-    /* Accent:     light green   #86efac                                       */
-    /* Highlight:  amber/IrO₂    #eab308                                       */
-    /* Muted:      grey          #6b7280                                       */
+    /* ── Slate / Academic palette ────────────────────────────────────────── */
+    /* Background: warm charcoal  #1c1917                                      */
+    /* Surface:    warm stone     #292524                                       */
+    /* Primary:    amber          #f59e0b   (metrics, active tab)               */
+    /* Accent:     teal           #14b8a6   (GO badges, chart bars)             */
+    /* Warning:    amber-light    #fcd34d   (headings, tab label)               */
+    /* Muted:      warm grey      #78716c                                       */
     /* ─────────────────────────────────────────────────────────────────────── */
 
     /* Base */
-    .stApp { background: #0c2d18; color: #e2f5e9; }
-    [data-testid="stSidebar"] { background: #163d24; border-right: 1px solid #1f5233; }
+    .stApp { background: #1c1917; color: #e7e5e4; }
+    [data-testid="stSidebar"] { background: #292524; border-right: 1px solid #3a3533; }
 
     /* Glassmorphism cards */
     .glass-card {
-        background: rgba(34,197,94,0.05);
-        border: 1px solid rgba(34,197,94,0.18);
+        background: rgba(245,158,11,0.05);
+        border: 1px solid rgba(245,158,11,0.18);
         border-radius: 12px;
         padding: 18px 22px;
         backdrop-filter: blur(8px);
@@ -61,31 +90,31 @@ st.markdown(
 
     /* KPI metric override */
     [data-testid="stMetric"] {
-        background: rgba(34,197,94,0.06);
-        border: 1px solid rgba(34,197,94,0.18);
+        background: rgba(245,158,11,0.06);
+        border: 1px solid rgba(245,158,11,0.18);
         border-radius: 10px;
         padding: 14px 18px;
     }
-    [data-testid="stMetricValue"] { color: #22c55e; font-size: 1.7rem; font-weight: 700; }
-    [data-testid="stMetricLabel"] { color: #6b7280; font-size: 0.82rem; }
+    [data-testid="stMetricValue"] { color: #f59e0b; font-size: 1.7rem; font-weight: 700; }
+    [data-testid="stMetricLabel"] { color: #78716c; font-size: 0.82rem; }
 
     /* Tab styling */
-    [data-testid="stTabs"] button { color: #6b7280; font-weight: 500; }
-    [data-testid="stTabs"] button[aria-selected="true"] { color: #86efac; border-bottom: 2px solid #22c55e; }
+    [data-testid="stTabs"] button { color: #78716c; font-weight: 500; }
+    [data-testid="stTabs"] button[aria-selected="true"] { color: #fcd34d; border-bottom: 2px solid #f59e0b; }
 
     /* Badge helpers */
-    .badge-go    { background:#15803d; color:#dcfce7; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
-    .badge-nogo  { background:#991b1b; color:#fee2e2; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
-    .badge-warn  { background:#b45309; color:#fef08a; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
+    .badge-go    { background:#134e4a; color:#99f6e4; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
+    .badge-nogo  { background:#7f1d1d; color:#fecaca; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
+    .badge-warn  { background:#78350f; color:#fef08a; border-radius:8px; padding:6px 18px; font-weight:700; font-size:1.15rem; display:inline-block; }
 
     /* Traffic lights */
-    .tl-go   { color:#4ade80; font-weight:700; font-size:1.1rem; }
-    .tl-warn { color:#eab308; font-weight:700; font-size:1.1rem; }
+    .tl-go   { color:#14b8a6; font-weight:700; font-size:1.1rem; }
+    .tl-warn { color:#f59e0b; font-weight:700; font-size:1.1rem; }
     .tl-nogo { color:#f87171; font-weight:700; font-size:1.1rem; }
 
     /* Section headers */
-    h3 { color: #86efac; }
-    h4 { color: #bbf7d0; }
+    h3 { color: #fcd34d; }
+    h4 { color: #e7e5e4; }
 
     /* ── Mobile responsive ────────────────────────────────────────────────── */
     @media (max-width: 768px) {
@@ -255,15 +284,15 @@ with st.sidebar:
     st.markdown(
         """
         <div class='glass-card'>
-          <h3 style='margin:0 0 4px 0; color:#67e8f9;'>⚗️ Green H₂ Catalyst</h3>
-          <span style='color:#94a3b8; font-size:0.82rem;'>Research Dashboard v1.0</span>
+          <h3 style='margin:0 0 4px 0; color:#fcd34d;'>⚗️ Green H₂ Catalyst</h3>
+          <span style='color:#a8a29e; font-size:0.82rem;'>Research Dashboard v1.0</span>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
     st.markdown(
-        f"<span style='color:#64748b; font-size:0.78rem;'>Session loaded: "
+        f"<span style='color:#78716c; font-size:0.78rem;'>Session loaded: "
         f"{datetime.now().strftime('%Y-%m-%d %H:%M')}</span>",
         unsafe_allow_html=True,
     )
@@ -272,14 +301,14 @@ with st.sidebar:
     st.markdown("**Gate Scripts**")
     for label, script in GATE_SCRIPTS.items():
         st.markdown(
-            f"<span style='color:#94a3b8; font-size:0.85rem;'>• {label}: <code>{script}</code></span>",
+            f"<span style='color:#a8a29e; font-size:0.85rem;'>• {label}: <code>{script}</code></span>",
             unsafe_allow_html=True,
         )
 
     st.divider()
     st.markdown(
         """
-        <span style='color:#64748b; font-size:0.78rem;'>
+        <span style='color:#78716c; font-size:0.78rem;'>
         Target: η₁₀ &lt; 300 mV, D_ss &lt; 2 µg/cm²/h<br>
         Benchmark: IrO₂ η₁₀=250 mV, D=0.01 µg/cm²/h
         </span>
@@ -307,7 +336,7 @@ tabs = st.tabs([
 with tabs[0]:
     st.markdown("## Pareto Explorer")
     st.markdown(
-        "<span style='color:#94a3b8;'>Tradeoff between overpotential (η₁₀) and dissolution rate. "
+        "<span style='color:#a8a29e;'>Tradeoff between overpotential (η₁₀) and dissolution rate. "
         "Lower-left is better. Gold ★ = IrO₂ benchmark.</span>",
         unsafe_allow_html=True,
     )
@@ -415,7 +444,7 @@ with tabs[0]:
                         y=p_pts["eta_10_mv"],
                         mode="markers",
                         name="Pareto Front",
-                        marker=dict(color="#38bdf8", size=9, line=dict(color="#0ea5e9", width=1)),
+                        marker=dict(color="#14b8a6", size=9, line=dict(color="#0d9488", width=1)),
                         hovertemplate="η₁₀=%{y:.1f} mV<br>D=%{x:.4f} µg/cm²/h<br>%{customdata}<extra>Pareto</extra>",
                         customdata=p_pts["_hover"],
                     ))
@@ -426,10 +455,10 @@ with tabs[0]:
                     y=[IRO2_ETA],
                     mode="markers+text",
                     name="IrO₂ Benchmark",
-                    marker=dict(symbol="star", color="#fbbf24", size=18),
+                    marker=dict(symbol="star", color="#f59e0b", size=18),
                     text=["IrO₂"],
                     textposition="top right",
-                    textfont=dict(color="#fbbf24"),
+                    textfont=dict(color="#f59e0b"),
                     hovertemplate="IrO₂<br>η₁₀=250 mV<br>D=0.01 µg/cm²/h<extra>Benchmark</extra>",
                 ))
 
@@ -453,7 +482,7 @@ with tabs[0]:
 with tabs[1]:
     st.markdown("## Composition Predictor")
     st.markdown(
-        "<span style='color:#94a3b8;'>Adjust element fractions below. "
+        "<span style='color:#a8a29e;'>Adjust element fractions below. "
         "Real-time gate evaluation uses the volcano model.</span>",
         unsafe_allow_html=True,
     )
@@ -567,17 +596,17 @@ with tabs[1]:
         fig_v = go.Figure()
         fig_v.add_trace(go.Scatter(
             x=eg_range, y=eta_range, mode="lines",
-            name="Volcano model", line=dict(color="#38bdf8", width=2),
+            name="Volcano model", line=dict(color="#14b8a6", width=2),
         ))
         fig_v.add_trace(go.Scatter(
             x=[eg], y=[eta_10], mode="markers+text",
             name="Your composition",
-            marker=dict(color="#f97316", size=12, symbol="circle"),
+            marker=dict(color="#f59e0b", size=12, symbol="circle"),
             text=[f"eg={eg:.2f}"],
             textposition="top center",
-            textfont=dict(color="#f97316"),
+            textfont=dict(color="#f59e0b"),
         ))
-        fig_v.add_hline(y=300, line=dict(color="#4ade80", dash="dash"), annotation_text="300 mV target")
+        fig_v.add_hline(y=300, line=dict(color="#14b8a6", dash="dash"), annotation_text="300 mV target")
         fig_v.update_layout(
             template=PLOTLY_DARK,
             title="Volcano Curve — η₁₀ vs eg",
@@ -680,7 +709,7 @@ with tabs[2]:
             )
 
             if "eta_opt_mv" in df_g2.columns and "name" in df_g2.columns:
-                color_col = df_g2["gate2_pass"].map({True: "#4ade80", False: "#f87171"}) if "gate2_pass" in df_g2.columns else "#38bdf8"
+                color_col = df_g2["gate2_pass"].map({True: "#14b8a6", False: "#f87171"}) if "gate2_pass" in df_g2.columns else "#14b8a6"
                 fig_g2 = go.Figure(go.Bar(
                     x=df_g2["name"],
                     y=df_g2["eta_opt_mv"],
@@ -688,8 +717,8 @@ with tabs[2]:
                     text=df_g2["eta_opt_mv"].round(1).astype(str) + " mV",
                     textposition="outside",
                 ))
-                fig_g2.add_hline(y=300, line=dict(color="#fbbf24", dash="dash"), annotation_text="Target 300 mV")
-                fig_g2.add_hline(y=IRO2_ETA, line=dict(color="#34d399", dash="dot"), annotation_text="IrO₂ 250 mV")
+                fig_g2.add_hline(y=300, line=dict(color="#f59e0b", dash="dash"), annotation_text="Target 300 mV")
+                fig_g2.add_hline(y=IRO2_ETA, line=dict(color="#14b8a6", dash="dot"), annotation_text="IrO₂ 250 mV")
                 fig_g2.update_layout(
                     template=PLOTLY_DARK,
                     title="Optimised η₁₀ per Composition",
@@ -735,15 +764,15 @@ with tabs[2]:
                     name="D_ss Continuous",
                     x=df_g3["name"],
                     y=df_g3["D_ss_cont"],
-                    marker_color="#60a5fa",
+                    marker_color="#14b8a6",
                 ))
                 fig_g3.add_trace(go.Bar(
                     name="D_ss Pulsed",
                     x=df_g3["name"],
                     y=df_g3["D_ss_pulsed"],
-                    marker_color="#f97316",
+                    marker_color="#f59e0b",
                 ))
-                fig_g3.add_hline(y=IRO2_DISS, line=dict(color="#fbbf24", dash="dot"),
+                fig_g3.add_hline(y=IRO2_DISS, line=dict(color="#f59e0b", dash="dot"),
                                   annotation_text="IrO₂ D_ss")
                 fig_g3.update_layout(
                     template=PLOTLY_DARK,
@@ -771,7 +800,7 @@ with tabs[2]:
 with tabs[3]:
     st.markdown("## Lifetime Projector")
     st.markdown(
-        "<span style='color:#94a3b8;'>P50 lifetime = median time to exceed 2× initial dissolution rate. "
+        "<span style='color:#a8a29e;'>P50 lifetime = median time to exceed 2× initial dissolution rate. "
         "Pulsed operation (electrolysis with start/stop) accelerates degradation.</span>",
         unsafe_allow_html=True,
     )
@@ -825,7 +854,7 @@ with tabs[3]:
             with right_lt:
                 # Comparison bar chart for all compositions
                 if "p50_pulsed_h" in df_lt.columns:
-                    color_bars = df_lt["gate3_pass"].map({True: "#4ade80", False: "#f87171"}) if "gate3_pass" in df_lt.columns else "#38bdf8"
+                    color_bars = df_lt["gate3_pass"].map({True: "#14b8a6", False: "#f87171"}) if "gate3_pass" in df_lt.columns else "#14b8a6"
 
                     fig_lt = go.Figure()
                     fig_lt.add_trace(go.Bar(
@@ -845,15 +874,15 @@ with tabs[3]:
                         text="◀ Selected",
                         showarrow=False,
                         xshift=50,
-                        font=dict(color="#fbbf24"),
+                        font=dict(color="#f59e0b"),
                     )
 
                     # IrO₂ reference line
                     fig_lt.add_hline(
                         y=IRO2_P50,
-                        line=dict(color="#fbbf24", dash="dot", width=2),
+                        line=dict(color="#f59e0b", dash="dot", width=2),
                         annotation_text=f"IrO₂ P50 ~{IRO2_P50/1000:.0f}k h",
-                        annotation_font_color="#fbbf24",
+                        annotation_font_color="#f59e0b",
                     )
 
                     fig_lt.update_layout(
@@ -883,7 +912,7 @@ with tabs[3]:
 with tabs[4]:
     st.markdown("## Literature Context")
     st.markdown(
-        "<span style='color:#94a3b8;'>Comparison of best reported earth-abundant acid OER catalysts. "
+        "<span style='color:#a8a29e;'>Comparison of best reported earth-abundant acid OER catalysts. "
         "Our best prediction is highlighted.</span>",
         unsafe_allow_html=True,
     )
