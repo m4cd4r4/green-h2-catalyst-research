@@ -66,7 +66,7 @@ Side-by-side comparison of the best reported earth-abundant acid OER catalysts (
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f172a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#22c55e', 'lineColor': '#22c55e'}}}%%
-flowchart LR
+flowchart TD
     classDef comp   fill:#0c1a2e,stroke:#38bdf8,color:#7dd3fc,font-weight:bold
     classDef gate1  fill:#0f1f3d,stroke:#38bdf8,color:#93c5fd
     classDef gate2  fill:#1c1400,stroke:#f59e0b,color:#fcd34d
