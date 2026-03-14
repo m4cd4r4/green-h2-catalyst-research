@@ -62,6 +62,41 @@ Side-by-side comparison of the best reported earth-abundant acid OER catalysts (
 
 ---
 
+## Screening Pipeline
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f172a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#22c55e', 'lineColor': '#22c55e'}}}%%
+flowchart LR
+    classDef comp   fill:#0c1a2e,stroke:#38bdf8,color:#7dd3fc,font-weight:bold
+    classDef gate1  fill:#0f1f3d,stroke:#38bdf8,color:#93c5fd
+    classDef gate2  fill:#1c1400,stroke:#f59e0b,color:#fcd34d
+    classDef gate3  fill:#0a2520,stroke:#10b981,color:#6ee7b7
+    classDef result fill:#0f2d2a,stroke:#22c55e,color:#86efac,font-weight:bold
+    classDef reject fill:#2d0f0f,stroke:#ef4444,color:#fca5a5
+
+    Comp(["Ca–Mn–W–Ti\nComposition Input"]):::comp
+
+    Gate1["Gate 1  Synthesis Sweep\nXGBoost phase stability\n216 temperature/pH conditions"]:::gate1
+    Pass1{"GO ✅\n216/216 pass\nf_CaWO₄ = 22.1%"}:::gate1
+
+    Gate2["Gate 2  eg Tuning\nVolcano-curve regression\nSabatier optimal zone 0.45–0.59"]:::gate2
+    Pass2{"GO ✅\neg = 0.520\nη₁₀ = 245 mV"}:::gate2
+
+    Gate3["Gate 3  Lifetime\nDissolution kinetics model\npulsed vs continuous operation"]:::gate3
+    Pass3{"GO ✅\nP50 = 143,506 h pulsed\nvs IrO₂ ~50,000 h"}:::gate3
+
+    Result(["🏆 Primary Candidate\nCa(0.11)Mn(0.55)W(0.34)\nAll three gates pass"]):::result
+    Reject(["❌ Eliminated"]):::reject
+
+    Comp --> Gate1 --> Pass1
+    Pass1 -->|pass| Gate2 --> Pass2
+    Pass2 -->|pass| Gate3 --> Pass3
+    Pass3 -->|pass| Result
+    Pass1 & Pass2 & Pass3 -->|fail| Reject
+```
+
+---
+
 ## Repo Structure
 
 ```
